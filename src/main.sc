@@ -31,13 +31,12 @@ theme: /
         q!: $regex</start>
         intent!: /StartGame
         a: Давай поиграем в "Назови столицу". Я говорю тебе страну, а ты называешь столицу. Начнем?
-        go!: Согласен?
 
 
         state: Yes
             intent: /Acceptance
             script: 
-                $session.keys = Object.keys($Capital)
+                $session.keys = Object.keys($Geography)
                 $session.total = 0
                 $session.right_answers = 0
             go!: /Game
@@ -49,8 +48,8 @@ theme: /
     state: Game
         script:
             $session.key = chooseRandCapitalKey($session.keys)
-            var country = $caila.inflect($Capital[$session.key].value.country, ["loc2"])
-            $reactions.answer("Назови столицу " + country);
+            var country = $Geography[$session.key].value.genCountry
+            $reactions.answer("Назови столицу " + country + " (" + $Geography[$session.key].value.name + ")");
             
             
 
@@ -58,9 +57,9 @@ theme: /
         q: * $Capital *
         script: 
             $session.total++
-            if (checkCapital($Capital, $session.key, $parseTree._Capital.name)){
+            if (checkCapital($Geography, $session.key, $parseTree._Capital.name)){
                 $session.right_answers++
-                $session.keys.splice(session.key)
+                $session.keys.splice($session.key)
                 $reactions.answer("Правильно!");
                 
                 }
@@ -68,13 +67,20 @@ theme: /
                 
                 $reactions.answer("Ты ошибся!");
             }
-            $session.keys.splice(session.key)
+            $session.keys.splice($session.key)
             $reactions.transition("/Game");
         
     state: StopGame
         intent!: /StopGame
         a: Хорошо, спасибо за игру! Количество правильных ответов - {{$session.right_answers}} из {{$session.total}}
 
+
+    state: Skip
+        intent!: /Skip
+        script:
+            $session.total++
+            $session.key.splice($session.key)
+            $reactions.transition("/Game");
     state: NoMatch
         event!: noMatch
         a: Пожалуйста назовите столицу!

@@ -110,6 +110,22 @@
       "refs" : [ ]
     },
     "priority" : 0
+  }, {
+    "path" : "/Skip",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "не знаю"
+    }, {
+      "text" : "пропустить"
+    }, {
+      "text" : "без понятия"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
   } ],
   "entities" : [ ],
   "enabledSystemEntities" : [ "duckling.number", "duckling.time", "duckling.duration", "duckling.phone-number", "duckling.email", "duckling.url" ],
