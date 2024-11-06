@@ -1,7 +1,7 @@
 {
   "project" : {
-    "id" : "just_ai_games_test-256111891-TlU",
-    "name" : "just_ai_games_test-256111891-TlU",
+    "id" : "bot_nazovi_stolitsu_-1000178366-kPY",
+    "name" : "bot_nazovi_stolitsu_-1000178366-kPY",
     "folder" : "/platform"
   },
   "settings" : {
@@ -23,6 +23,72 @@
     }
   },
   "intents" : [ {
+    "path" : "/StartGame",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "Давай поиграем"
+    }, {
+      "text" : "хочу поиграть"
+    }, {
+      "text" : "начни игру"
+    }, {
+      "text" : "игра"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
+    "path" : "/StopGame",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "Мне надоело"
+    }, {
+      "text" : "закончить игру"
+    }, {
+      "text" : "хватит играть!"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
+    "path" : "/Acceptance",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "да"
+    }, {
+      "text" : "согласен"
+    }, {
+      "text" : "давай начнем"
+    }, {
+      "text" : "Да"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
+    "path" : "/Decline",
+    "enabled" : true,
+    "shared" : false,
+    "phrases" : [ {
+      "text" : "Нет"
+    }, {
+      "text" : "не хочу"
+    } ],
+    "classificationRules" : {
+      "refs" : [ ]
+    },
+    "patterns" : [ ],
+    "priority" : 0
+  }, {
     "path" : "/пока",
     "enabled" : true,
     "shared" : false,
