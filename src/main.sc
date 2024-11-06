@@ -30,6 +30,8 @@ theme: /
     state: StartGame
         q!: $regex</start>
         intent!: /StartGame
+        script: 
+            $jsapi.startSession();
         a: Давай поиграем в "Назови столицу". Я говорю тебе страну, а ты называешь столицу. Начнем?
 
 
@@ -38,7 +40,7 @@ theme: /
             script: 
                 $session.keys = Object.keys($Geography)
                 $session.total = 0
-                $session.right_answers = 0
+                $session.rightAnswers = 0
             go!: /Game
 
         state: No
@@ -49,7 +51,8 @@ theme: /
         script:
             $session.key = chooseRandCapitalKey($session.keys)
             var country = $Geography[$session.key].value.genCountry
-            $reactions.answer("Назови столицу " + country + " (" + $Geography[$session.key].value.name + ")");
+            $session.capital = $Geography[$session.key].value.name
+            $reactions.answer("Назови столицу " + country + " (" + $session.capital + ")");
             
             
 
@@ -58,7 +61,7 @@ theme: /
         script: 
             $session.total++
             if (checkCapital($Geography, $session.key, $parseTree._Capital.name)){
-                $session.right_answers++
+                $session.rightAnswers++
                 $session.keys.splice($session.key)
                 $reactions.answer("Правильно!");
                 
@@ -72,23 +75,20 @@ theme: /
         
     state: StopGame
         intent!: /StopGame
-        a: Хорошо, спасибо за игру! Количество правильных ответов - {{$session.right_answers}} из {{$session.total}}
+        a: Хорошо, спасибо за игру! Количество правильных ответов - {{$session.rightAnswers}} из {{$session.total}}
+        script:
+            $jsapi.stopSession();
 
 
     state: Skip
         intent!: /Skip
         script:
             $session.total++
-            $session.key.splice($session.key)
+            $session.keys.splice($session.key)
             $reactions.transition("/Game");
+            
     state: NoMatch
         event!: noMatch
         a: Пожалуйста назовите столицу!
 
-    state: reset
-        q!: reset
-        script:
-            $session = {};
-            $client = {};
-        go!: /Start
 
